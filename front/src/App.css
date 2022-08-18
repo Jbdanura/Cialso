@@ -102,7 +102,22 @@
   background-color: rgb(179, 191, 245);
   border: 1px solid blue;
   width: 60px;
-  
+}
+.intro-form .error-msg{
+  color: red;
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid red;
+  width: 50%;
+  margin: 10px auto;
+}
+.intro-form .msg{
+  color: rgb(36, 189, 22);
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid rgb(36, 189, 22);
+  width: 50%;
+  margin: 10px auto;
 }
 @media screen and (max-width:1200px){
   .intro-container{

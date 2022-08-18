@@ -4,11 +4,11 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 
 function App() {
-  const [user,setUsername] = useState(true)
-
+  const [user,setUser] = useState(false)
+  const baseUrl = "http://localhost:3001/"
   return (
     <div className="App">
-      {!user ? <Login></Login> : 
+      {!user ? <Login baseUrl={baseUrl}></Login> : 
       <Navbar/>
       }
 
