@@ -3,38 +3,62 @@ import { useState } from 'react'
 import background from '../background.jpg';
 import axios from "axios"
 
-const Login = ({baseUrl}) => {
+const Login = ({baseUrl,setUser}) => {
 
-const [loginForm,setLoginForm] = useState(false)
-const [errorMessage,setErrorMessage] = useState()
-const [message,setMessage] = useState()
-const changeFormStyle = {
-    textDecoration:"underline",
-    color:"lightgreen",
-    cursor:"pointer"
-}
-const createAccount = async(event) => {
-  event.preventDefault()
-  const name = event.target.name.value
-  const lastname = event.target.lastname.value
-  const username = event.target.username.value
-  const email = event.target.email.value
-  const password = event.target.password.value
-  
-  axios.post(baseUrl+"users/new",{name,lastname,username,email,password})
-  .then((result)=>{
-    setMessage(result.data)
-    setTimeout(()=>{
-      setMessage()
-    },5000)})
-  .catch((error)=>{
-    if(error.response){
-      setErrorMessage(error.response.data)
+  const [loginForm,setLoginForm] = useState(false)
+  const [errorMessage,setErrorMessage] = useState()
+  const [message,setMessage] = useState()
+  const changeFormStyle = {
+      textDecoration:"underline",
+      color:"lightgreen",
+      cursor:"pointer"
+  }
+  const createAccount = async(event) => {
+    event.preventDefault()
+    const name = event.target.name.value
+    const lastname = event.target.lastname.value
+    const username = event.target.username.value
+    const email = event.target.email.value
+    const password = event.target.password.value
+    
+    axios.post(baseUrl+"users/new",{name,lastname,username,email,password})
+    .then((result)=>{
+      setMessage(result.data)
       setTimeout(()=>{
-        setErrorMessage()
-      },5000)}
+        setMessage()
+      },5000)
+      event.target.name.value = ""
+      event.target.lastname.value = ""
+      event.target.username.value = ""
+      event.target.email.value = ""
+      event.target.password.value = ""
     })
-}
+
+    .catch((error)=>{
+      if(error.response){
+        setErrorMessage(error.response.data)
+        setTimeout(()=>{
+          setErrorMessage()
+        },5000)}
+      })
+  }
+  const login = async(event)=>{
+    event.preventDefault()
+    const username = event.target.username.value
+    const password = event.target.password.value
+
+    axios.post(baseUrl+"users/login",{username,password})
+    .then((result)=>{
+      setUser(result.data)
+    })
+    .catch((error)=>{
+      if(error.response){
+        setErrorMessage(error.response.data)
+        setTimeout(()=>{
+          setErrorMessage()
+        },5000)}
+      })
+    }
 
   return (
     <div className="intro-container" style={{backgroundImage:`url(${background})`}}>
@@ -69,7 +93,7 @@ const createAccount = async(event) => {
           <p className="change-form">ALREADY HAVE AN ACCOUNT? <span style={changeFormStyle} onClick={()=>setLoginForm(true)}>LOGIN</span></p>
           <button type="submit">REGISTER</button>
         </form>
-        <form className="intro-form" style={loginForm ? {display:"flex"} : {display:"none"}}>
+        <form className="intro-form" style={loginForm ? {display:"flex"} : {display:"none"}} onSubmit={login}>
           <p>LOGIN</p>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>

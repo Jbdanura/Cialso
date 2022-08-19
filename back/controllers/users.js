@@ -1,7 +1,9 @@
+require("dotenv").config({path:"./keys/.env"})
+
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
-
 const usersRouter = require("express").Router()
+const jwt = require("jsonwebtoken")
 
 usersRouter.get("/all",async(req,res)=>{
     try {
@@ -34,6 +36,38 @@ usersRouter.post("/new",async(req,res)=>{
         return res.status(400).send(error)
     }
 
+})
+
+usersRouter.post("/login",async(req,res)=>{
+    try {
+        const {username,password} = req.body
+        console.log(username,password)
+        if(!username || !password){
+            console.log("1")
+            return res.status(400).send("Missing username/password")
+        }
+
+        const user = await User.findOne({where : {username:username}})
+        if(!user){
+            console.log("2")
+            return res.status(400).send("Account does not exist")
+        }
+
+        const passwordCorrect = await bcrypt.compare(password,user.password)
+        if(!passwordCorrect){
+            console.log("3")
+            return res.status(400).send("Incorrect password")
+        }
+        const userForToken = {
+            username: user.username,
+            id: user.id
+        }
+        const token = jwt.sign(userForToken, process.env.SECRET)
+        res.status(200).send({token,username:username})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send(error)
+    }
 })
 
 module.exports = usersRouter
