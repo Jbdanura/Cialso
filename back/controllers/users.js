@@ -43,19 +43,16 @@ usersRouter.post("/login",async(req,res)=>{
         const {username,password} = req.body
         console.log(username,password)
         if(!username || !password){
-            console.log("1")
-            return res.status(400).send("Missing username/password")
+            return res.status(400).send("Missing field")
         }
 
         const user = await User.findOne({where : {username:username}})
         if(!user){
-            console.log("2")
             return res.status(400).send("Account does not exist")
         }
 
         const passwordCorrect = await bcrypt.compare(password,user.password)
         if(!passwordCorrect){
-            console.log("3")
             return res.status(400).send("Incorrect password")
         }
         const userForToken = {
