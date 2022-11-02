@@ -12,7 +12,7 @@ const User = sequelize.define("User",{
     },
     username:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
     },
     email:{
         type:DataTypes.STRING,
@@ -26,4 +26,23 @@ const User = sequelize.define("User",{
     sequelize
 })
 
-module.exports = User
+const Friendship = sequelize.define("Friendship",{
+    user:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+            model: "User",
+            key: "id"
+        }
+    },
+    friend:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+            model: "User",
+            key: "id"
+        }
+    }
+})
+
+module.exports = {User,Friendship}

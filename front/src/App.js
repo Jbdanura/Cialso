@@ -9,7 +9,7 @@ function App() {
   console.log(user)
   return (
     <div className="App">
-      {!user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
+      {user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
       <Navbar/>
       }
 

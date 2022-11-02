@@ -70,38 +70,39 @@
   top: 20%;
 }
 .navbar{
-  display: flex;
-  background-color: rgb(235, 233, 252);
+  display:flex;
   justify-content: space-around;
+  background-color: rgb(49, 113, 231);
+  padding: 6px 0;
 }
-.navbar-logo{
-  color: #08db01;
-  font-size: 40px;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgba(0, 26, 255, 0.712);
-  font-weight: bolder;
+.navbar-home, .menu{
+  font-size: 25px;
+  color: white;
+  margin-top: 3px;
 }
 .navbar-search{
-  width: 30%;
-  margin-top: 5px;
+  width: 500px;
   display: flex;
 }
-.navbar-search input{
- width: 70%;
- height: 15px;
- padding: 10px;
- border: 1px solid rgba(0, 0, 255, 0.37);
- font-size: 20px;
+.navbar-bar .close{
+  display: none;
 }
-.navbar-search input::placeholder{
-  font-size: 15px;
-  color: grey;
+.navbar .menu{
+  display: none;
+}
+.navbar-search input{
+  border-radius: 5px;
+  width: 400px;
+  padding: 10px;
+  padding-left: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.397);
 }
 .navbar-search button{
-  height: 37px;
-  background-color: rgb(179, 191, 245);
-  border: 1px solid blue;
-  width: 60px;
+  margin-left: -5px;
+  width: 40px;
+  background-color: rgb(182, 187, 255);
+  border: 1px solid green;
+  padding: 5px;
 }
 .intro-form .error-msg{
   color: red;
@@ -131,19 +132,7 @@
     top: 15%;
     font-size: 70px;
   }
-  .navbar-search{
-    width: 50%;
-  }
-  .navbar-search input{
-   width: 70%;
-   font-size: 15px;
-  }
-  .navbar-search button{
-    height: 36px;
-    background-color: rgb(179, 191, 245);
-    border: 1px solid blue;
-    width: 30px;
-  }
+ 
 }
 @media screen and (max-width:800px){
   .intro-container{
@@ -159,13 +148,40 @@
     top: 15%;
     font-size: 60px;
   }
-  .navbar{
-    height: 60px;
+  .navbar-bar{
+    display: none;
   }
-  .navbar-logo{
-    font-size: 35px;
+  .mobile-navbar{
+    width: 80vw;
+    background-color: blue;
+    position: absolute;
+    top:0;
+    left:0;
+    padding-bottom: 100px;
+  }
+  .mobile-navbar .navbar-search{
+    margin-top: 20px;
+  }
+  .mobile-navbar .close{
+    display: block;
+    position: absolute;
+    padding: 8px;
+    left: 90%;
+    top: 0;
+    margin-top: 10px;
+    border: 1px solid rgb(172, 0, 0);
+    background-color: rgb(255, 101, 101);
+  }
+  .navbar-search input{
+    width: 200px;
+  }
+  .navbar-search{
+    margin-top: 10px;
   }
 
+  .navbar .menu{
+    display:block;
+  }
 }
 @media screen and (max-width:400px){
   .intro-form button{
@@ -175,24 +191,5 @@
     top: 15%;
     font-size: 50px;
   }
-  .navbar-logo{
-    font-size: 30px;
-  }
-  .navbar-search{
-    width: 50%;
-  }
-  .navbar-search input{
-   width: 60%;
-   font-size: 12px;
-  }
-  .navbar-search button{
-    height: 36px;
-    background-color: rgb(179, 191, 245);
-    border: 1px solid blue;
-    width: 20px;
-  }
-  .navbar-search{
-    width: 30%;
-    margin-top: 0;
-  }
+ 
 }

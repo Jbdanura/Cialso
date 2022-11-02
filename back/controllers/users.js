@@ -1,6 +1,6 @@
 require("dotenv").config({path:"./keys/.env"})
 
-const User = require("../models/User")
+const User = require("../models/User").User
 const bcrypt = require("bcrypt")
 const usersRouter = require("express").Router()
 const jwt = require("jsonwebtoken")

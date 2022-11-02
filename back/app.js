@@ -5,9 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const indexRouter = require('./controllers');
 const { connect } = require('./utils/db');
-const User = require('./models/User');
+const User = require('./models/User').User;
 const usersRouter = require('./controllers/users');
-const cors = require("cors")
+const cors = require("cors");
+const Post = require('./models/Post');
+const Comment = require('./models/Comment');
+const Friendship = require('./models/User').Friendship;
+const associations = require("./utils/associations")
 
 var app = express();
 
@@ -27,9 +31,13 @@ app.use(function(req, res, next) {
 });
 
 connect()
-const syncModels = async() =>{
+
+const syncModels = async()=>{
   await User.sync({alter:true})
+  await Post.sync({alter:true})
 }
+
+associations()
 syncModels()
 
 // error handler
