@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   const [menu,setMenu] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <div className="navbar">
-        <p className="navbar-home">Home</p>
+        <p className="navbar-home" onClick={()=>{navigate("/")}}>Home</p>
         <div className={!menu ? "navbar-bar" : "mobile-navbar"}>
           <div className="navbar-search">
               <input type="text" placeholder='Search person...'></input>
@@ -15,7 +17,7 @@ const Navbar = () => {
           </div>
           <button className="close" onClick={()=>{setMenu(false)}}>X</button>
         </div>
-        <div className="navbar-profile">e</div>
+        <div className="navbar-profile"><img onClick={()=>{navigate("/user")}} className="avatar" src="/user.png"/></div>
         <div className="menu" onClick={()=>setMenu(true)}>
           Menu
         </div>

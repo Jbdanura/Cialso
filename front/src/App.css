@@ -75,6 +75,9 @@
   background-color: rgb(49, 113, 231);
   padding: 6px 0;
 }
+.navbar-home{
+  cursor: pointer;
+}
 .navbar-home, .menu{
   font-size: 25px;
   color: white;
@@ -119,6 +122,32 @@
   border: 1px solid rgb(36, 189, 22);
   width: 50%;
   margin: 10px auto;
+}
+.navbar .avatar{
+  width: 30px;
+}
+.navbar .avatar:hover{
+  cursor:pointer;
+}
+.user-data .avatar{
+  width: 100px;
+}
+.user-data .info{
+  margin-left: 20px;
+}
+.user-data .name{
+  margin-top: 20px;
+}
+.user-data .username{
+  margin-top: 20px;
+}
+.user-data{
+  display: flex;
+  margin-left: 20vw;
+  margin-top: 50px;
+}
+.home .discover{
+  cursor: pointer;
 }
 @media screen and (max-width:1200px){
   .intro-container{

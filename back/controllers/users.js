@@ -15,6 +15,18 @@ usersRouter.get("/all",async(req,res)=>{
 
 })
 
+usersRouter.get("/user",async(req,res)=>{
+    console.log("hehe")
+    try {
+        const username = req.params.username
+        console.log(username)
+        const user = await User.findOne({username: username})
+        return res.status(200).send(user)
+    } catch (error) {
+        return res.status(400).send(error)
+    }
+})
+
 usersRouter.post("/new",async(req,res)=>{
     try {
         const {name,lastname,username,email,password} = req.body
@@ -30,7 +42,7 @@ usersRouter.post("/new",async(req,res)=>{
             return res.status(400).send("Email already taken")
         }
         const hashedPassword = await bcrypt.hash(password,10)
-        const user = await User.create({name,lastname,username,email,password:hashedPassword})
+        const user = await User.create({name,lastname,avatar:false,username,email,password:hashedPassword})
         return res.status(201).send("Account created!")  
     } catch (error) {
         return res.status(400).send(error)

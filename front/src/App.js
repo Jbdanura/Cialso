@@ -1,17 +1,29 @@
 import './App.css';
 import React,{useState} from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './components/Login';
 import Navbar from './components/Navbar';
+import User from './components/User';
+import Home from './components/Home';
+import Discover from './components/Discover';
 
 function App() {
   const [user,setUser] = useState(false)
   const baseUrl = "http://localhost:3001/"
-  console.log(user)
+
   return (
     <div className="App">
-      {user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
+      <BrowserRouter>
+      {!user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
       <Navbar/>
       }
+      <Routes>
+        <Route path="/" element={<Home baseUrl={baseUrl} user={user}/>}/>
+        <Route path="/user" element={<User baseUrl={baseUrl} user={user}/>}/>
+        <Route path="/discover" element={<Discover baseUrl={baseUrl}/>}/>
+      </Routes>
+      </BrowserRouter>
+
 
     </div>
   );
