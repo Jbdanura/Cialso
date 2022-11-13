@@ -143,11 +143,39 @@
 }
 .user-data{
   display: flex;
-  margin-left: 20vw;
-  margin-top: 50px;
+  width: 70vw;
+  margin: 0 auto;
+  margin-top: 30px;
 }
 .home .discover{
   cursor: pointer;
+}
+.discover-container{
+  width: 80vw;
+  margin: 0 auto;
+}
+.discover-user{
+  display:flex;
+  margin: 20px 0;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.149);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.149);
+  background-color: rgb(248, 248, 248);
+  padding: 10px;
+  cursor: pointer;
+}
+.discover-user-info{
+  margin: 10px 0 0 20px;
+}
+.discover-name{
+  font-size: 20px;
+}
+.discover-username{
+  margin-top: 10px;
+  color: grey;
+}
+.discover-avatar{
+  width: 70px;
 }
 @media screen and (max-width:1200px){
   .intro-container{

@@ -15,12 +15,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
       {!user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
-      <Navbar/>
+      <Navbar user={user}/>
       }
       <Routes>
         <Route path="/" element={<Home baseUrl={baseUrl} user={user}/>}/>
-        <Route path="/user" element={<User baseUrl={baseUrl} user={user}/>}/>
-        <Route path="/discover" element={<Discover baseUrl={baseUrl}/>}/>
+        <Route path="/:username" element={<User baseUrl={baseUrl} user={user}/>}/>
+        <Route path="/discover" element={<Discover baseUrl={baseUrl} user={user}/>}/>
       </Routes>
       </BrowserRouter>
 

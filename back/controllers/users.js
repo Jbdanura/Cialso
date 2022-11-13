@@ -7,20 +7,19 @@ const jwt = require("jsonwebtoken")
 
 usersRouter.get("/all",async(req,res)=>{
     try {
-        const users = await User.findAll()
+        const users = await User.findAll({
+            attributes:["avatar","name","lastname","username"]
+        })
         return res.status(200).send(users)
     } catch (error) {
         return res.status(400).send(error)
     }
-
 })
 
-usersRouter.get("/user",async(req,res)=>{
-    console.log("hehe")
+usersRouter.get("/:username",async(req,res)=>{
     try {
         const username = req.params.username
-        console.log(username)
-        const user = await User.findOne({username: username})
+        const user = await User.findOne({where:{username: username}})
         return res.status(200).send(user)
     } catch (error) {
         return res.status(400).send(error)
