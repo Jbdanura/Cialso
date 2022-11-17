@@ -1,5 +1,5 @@
 import './App.css';
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './components/Login';
 import Navbar from './components/Navbar';
@@ -11,11 +11,18 @@ function App() {
   const [user,setUser] = useState(false)
   const baseUrl = "http://localhost:3001/"
 
+  useEffect(()=>{
+    const loggedUser = localStorage.getItem("user")
+    if(loggedUser){
+      const foundUser = JSON.parse(loggedUser)
+      setUser(foundUser)
+    }
+  },[])
   return (
     <div className="App">
       <BrowserRouter>
       {!user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
-      <Navbar user={user}/>
+      <Navbar user={user} setUser={setUser}/>
       }
       <Routes>
         <Route path="/" element={<Home baseUrl={baseUrl} user={user}/>}/>

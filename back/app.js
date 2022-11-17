@@ -11,7 +11,8 @@ const cors = require("cors");
 const Post = require('./models/Post');
 const Comment = require('./models/Comment');
 const Friendship = require('./models/User').Friendship;
-const associations = require("./utils/associations")
+const associations = require("./utils/associations");
+const postsRouter = require('./controllers/posts');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/",indexRouter)
 app.use("/users", usersRouter)
+app.use("/posts",postsRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

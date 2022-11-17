@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Navbar = ({user}) => {
+const Navbar = ({user,setUser}) => {
   const [menu,setMenu] = useState(false)
   const navigate = useNavigate()
+
+  const logOut = () => {
+    setUser(null)
+    localStorage.clear()
+  }
 
   return (
     <div className="navbar">
@@ -17,7 +22,10 @@ const Navbar = ({user}) => {
           </div>
           <button className="close" onClick={()=>{setMenu(false)}}>X</button>
         </div>
-        <div className="navbar-profile"><img onClick={()=>{navigate(`/${user.username}`)}} className="avatar" src="/user.png"/></div>
+        <div className="navbar-profile">
+          <img onClick={()=>{navigate(`/${user.username}`)}} className="avatar" src="/user.png"/>
+          <img onClick={()=>logOut()} className="logout" src="/logout.png"/>
+          </div>
         <div className="menu" onClick={()=>setMenu(true)}>
           Menu
         </div>

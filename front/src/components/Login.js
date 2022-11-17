@@ -50,6 +50,7 @@ const Login = ({baseUrl,setUser}) => {
     axios.post(baseUrl+"users/login",{username,password})
     .then((result)=>{
       setUser(result.data)
+      localStorage.setItem("user",JSON.stringify(result.data))
     })
     .catch((error)=>{
       if(error.response){
