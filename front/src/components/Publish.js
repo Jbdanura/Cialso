@@ -5,7 +5,9 @@ const Publish = ({baseUrl,user}) => {
   const [description, setDescription] = useState("Description of your post")
   const publishPost = async(event)=>{
     event.preventDefault()
-    axios.post(`${baseUrl}posts/new`,{description})
+    const token = `bearer ${user.token}`
+    const config = {headers: {Authorization: token}}
+    axios.post(`${baseUrl}posts/new`,{description},config)
     .then(result=>console.log(result))
   }
   return (
