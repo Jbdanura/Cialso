@@ -134,23 +134,38 @@
 .navbar .avatar:hover{
   cursor:pointer;
 }
+.user-data{
+  display: flex;
+  margin-top: 20px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
 .user-data .avatar{
-  width: 100px;
+  width: 150px;
 }
 .user-data .info{
   margin-left: 20px;
+  margin-top: 40px;
+  font-size: 22px;
 }
 .user-data .name{
   margin-top: 20px;
+  font-weight: bolder;
+  font-size: 25px;
 }
+
 .user-data .username{
   margin-top: 20px;
 }
-.user-data{
-  display: flex;
-  width: 70vw;
+.user-container{
+  width: 80vw;
   margin: 0 auto;
-  margin-top: 30px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-top: none;
+  border-bottom: none;
+  padding: 10px;
+  min-height: 90vh;
+  background-color: white;
 }
 .home .discover{
   cursor: pointer;
@@ -190,7 +205,36 @@
   width: 40%;
   height: 150px;
   resize: none;
-  
+}
+.post-avatar{
+  width: 50px;
+}
+
+.post-info{
+  display: flex;
+}
+.post-name{
+  margin: 10px 0 0 15px;
+  font-weight: bolder;
+}
+.post-username{
+  font-weight: normal;
+  margin-left: 25px;
+}
+body{
+  background-color: rgb(250, 250, 250);
+}
+
+.user-post{
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  min-height: 0;
+  padding: 15px 5px;
+}
+.user-post:hover{
+  background-color: rgb(245, 245, 245);
+}
+.post-text{
+  margin: 5px 0 0 65px;
 }
 @media screen and (max-width:1200px){
   .intro-container{

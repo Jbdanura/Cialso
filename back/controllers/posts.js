@@ -28,4 +28,14 @@ postsRouter.post("/new", async(req,res)=>{
     res.json(description)
 })
 
+postsRouter.get("/:username",async(req,res)=>{
+    try {
+        const username = req.params.username
+        const user = await User.findOne({where:{username}})
+        return res.status(200).send(user)
+    } catch (error) {
+        return res.status(400).send(error)
+    }
+})
+
 module.exports = postsRouter

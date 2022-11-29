@@ -4,6 +4,7 @@ const User = require("../models/User").User
 const bcrypt = require("bcrypt")
 const usersRouter = require("express").Router()
 const jwt = require("jsonwebtoken")
+const Post = require("../models/Post")
 
 usersRouter.get("/all",async(req,res)=>{
     try {
@@ -19,7 +20,7 @@ usersRouter.get("/all",async(req,res)=>{
 usersRouter.get("/:username",async(req,res)=>{
     try {
         const username = req.params.username
-        const user = await User.findOne({where:{username: username}})
+        const user = await User.findOne({where:{username: username},include: Post})
         return res.status(200).send(user)
     } catch (error) {
         return res.status(400).send(error)
@@ -46,7 +47,6 @@ usersRouter.post("/new",async(req,res)=>{
     } catch (error) {
         return res.status(400).send(error)
     }
-
 })
 
 usersRouter.post("/login",async(req,res)=>{
