@@ -125,6 +125,7 @@
 }
 .navbar .avatar{
   width: 30px;
+  height: 30px;
 }
 .navbar .logout{
   width: 30px;
@@ -137,28 +138,43 @@
 .user-data{
   display: flex;
   margin-top: 20px;
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+.follow-container{
+  display:flex;
+  margin-top: 20px;
+
+}
+.followers, .following{
+  font-size: 20px;
+  text-decoration: underline;
+}
+.followers:hover, .following:hover{
+  cursor:pointer;
+}
+.following{
+  margin-left: 15px;
 }
 .user-data .avatar{
   width: 150px;
 }
 .user-data .info{
   margin-left: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
   font-size: 22px;
 }
 .user-data .name{
-  margin-top: 20px;
+  margin-top: 10px;
   font-weight: bolder;
   font-size: 25px;
 }
 
 .user-data .username{
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .user-container{
-  width: 80vw;
+  width: 70vw;
   margin: 0 auto;
   border: 1px solid rgba(128, 128, 128, 0.3);
   border-top: none;
@@ -209,9 +225,11 @@
 .post-avatar{
   width: 50px;
 }
-
 .post-info{
   display: flex;
+}
+.post-info:hover{
+  cursor: pointer;
 }
 .post-name{
   margin: 10px 0 0 15px;
@@ -235,6 +253,36 @@ body{
 }
 .post-text{
   margin: 5px 0 0 65px;
+}
+
+.post-options{
+  display: flex;
+  margin: 30px 0 0 65px;
+}
+.post-options p{
+  margin-right: 25px;
+}
+.post-options svg{
+  transform: scale(1.5);
+}
+.post-options p:hover{
+  cursor: pointer;
+}
+.follow{
+  margin-left: 20px;
+  text-decoration: none;
+  border: 2px solid green;
+  font-weight: normal;
+  color: rgb(0, 51, 0);
+  background-color: rgba(52, 250, 78, 0.089);
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: -10px;
+}
+.follow:hover{
+  background-color: green;
+  color: white;
+  cursor: pointer;
 }
 @media screen and (max-width:1200px){
   .intro-container{
