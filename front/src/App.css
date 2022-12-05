@@ -129,8 +129,7 @@
 }
 .navbar .logout{
   width: 30px;
-  transform: translateX(15px);
-  cursor: pointer;
+  margin-left: 15px;
 }
 .navbar .avatar:hover{
   cursor:pointer;
@@ -174,7 +173,7 @@
   margin-top: 10px;
 }
 .user-container{
-  width: 70vw;
+  width: 60vw;
   margin: 0 auto;
   border: 1px solid rgba(128, 128, 128, 0.3);
   border-top: none;
@@ -316,29 +315,30 @@ body{
     display: none;
   }
   .mobile-navbar{
-    width: 80vw;
     background-color: rgb(144, 144, 255);
     position: absolute;
     top:0;
     left:0;
-    padding-bottom: 100px;
+    padding-bottom: 20px;
+    border-radius: 3px;
+    width: 80vw;
   }
   .mobile-navbar .navbar-search{
     margin-top: 10px;
-    width: 100%;
+    margin-left: 10px;
   }
   .mobile-navbar .close{
     display: block;
     position: absolute;
     padding: 8px;
-    left: 90%;
+    left: 88%;
     top: 0;
     margin-top: 10px;
     border: 1px solid rgb(172, 0, 0);
     background-color: rgb(238, 70, 70);
   }
   .navbar-search input{
-    width: 200px;
+    width: 50vw;
   }
   .navbar-search{
     margin-top: 10px;
@@ -354,8 +354,26 @@ body{
     width: 80%;
     height: 150px;
   }
-
+  .user-container{
+    width: 92%;
+  }
+  .user-data{
+    display:block;
+  }
+  .user-data .avatar{
+    margin-left: 25%;
+  }
+  .follow-container, .followers, .following{
+    font-size: 15px;
+  }
+  .follow{
+    margin-left: 5px;
+  }
+  .follow-container{
+    justify-content: space-evenly;
+  }
 }
+
 @media screen and (max-width:400px){
   .intro-form button{
     width: 60%;
