@@ -5,14 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const indexRouter = require('./controllers');
 const { connect } = require('./utils/db');
-const User = require('./models/User').User;
+const User = require('./models/User')
 const usersRouter = require('./controllers/users');
 const cors = require("cors");
 const Post = require('./models/Post');
 const Comment = require('./models/Comment');
-const Friendship = require('./models/User').Friendship;
 const associations = require("./utils/associations");
 const postsRouter = require('./controllers/posts');
+const Follow = require('./models/Follow');
+
 
 var app = express();
 
@@ -37,6 +38,7 @@ connect()
 const syncModels = async()=>{
   await User.sync({alter:true})
   await Post.sync({alter:true})
+  await Follow.sync({alter:true})
 }
 
 associations()

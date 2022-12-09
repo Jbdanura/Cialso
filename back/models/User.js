@@ -30,23 +30,5 @@ const User = sequelize.define("User",{
     sequelize
 })
 
-const Friendship = sequelize.define("Friendship",{
-    user:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references:{
-            model: "User",
-            key: "id"
-        }
-    },
-    friend:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references:{
-            model: "User",
-            key: "id"
-        }
-    }
-})
 
-module.exports = {User,Friendship}
+module.exports = User

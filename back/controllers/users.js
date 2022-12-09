@@ -1,10 +1,11 @@
 require("dotenv").config({path:"./keys/.env"})
 
-const User = require("../models/User").User
+const User = require("../models/User")
 const bcrypt = require("bcrypt")
 const usersRouter = require("express").Router()
 const jwt = require("jsonwebtoken")
 const Post = require("../models/Post")
+const Follow = require("../models/Follow")
 
 usersRouter.get("/all",async(req,res)=>{
     try {
@@ -45,6 +46,16 @@ usersRouter.post("/new",async(req,res)=>{
         const user = await User.create({name,lastname,avatar:false,username,email,password:hashedPassword})
         return res.status(201).send("Account created!")  
     } catch (error) {
+        return res.status(400).send(error)
+    }
+})
+
+usersRouter.post("/follow",async(req,res)=>{
+    try{
+        const userToFollow = await User.findOne({where: {username:req.body.userToFollow}})
+        const user = await User.findOne({where: {username:req.body.user}})
+        const follow = await Follow.create({followingId: userToFollow.id, followerId: user.id})
+    } catch(error){
         return res.status(400).send(error)
     }
 })

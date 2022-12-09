@@ -16,6 +16,10 @@ const User = ({baseUrl,user}) => {
     }
   ,[username])
 
+  const followUser = async(userToFollow,user) => {
+    axios.post(baseUrl + `users/follow`,{userToFollow,user})
+  }
+
   if (!user){
     return null
   } 
@@ -34,7 +38,7 @@ const User = ({baseUrl,user}) => {
               <p className="followers"><span style={{fontWeight:"bolder"}}>10</span> followers</p>
               <p className="following"><span style={{fontWeight:"bolder"}}>13</span> following</p>
               {userData.username != user.username &&
-                <p className="follow">Follow</p>
+                <p className="follow" onClick={()=>followUser(userData.username,user.username)}>Follow</p>
               }
           </div>
           </div>
@@ -43,9 +47,6 @@ const User = ({baseUrl,user}) => {
         {userData.Posts.length > 0 ? 
           <div className="user-posts">
             {userData.Posts.slice(0).reverse().map(post=>{
-              /*{id: 10, description: 'hola', createdAt: '2022-11-20T21:40:38.997Z',
-              updatedAt: '2022-11-20T21:40:38.997Z', UserId: 6}UserId: 6createdAt: "2022-11-20T21:40:38.997Z"description:
-               "hola"id: 10updatedAt: "2022-11-20T21:40:38.997Z"[[Prototype]]: Object*/
               return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user}></Post>
             })}
           </div> : null}
