@@ -54,12 +54,34 @@ usersRouter.post("/follow",async(req,res)=>{
     try{
         const userToFollow = await User.findOne({where: {username:req.body.userToFollow}})
         const user = await User.findOne({where: {username:req.body.user}})
+        const alreadyFollowing = await Follow.findOne({where:{followingId:userToFollow.id, followerId:user.id}})
+        if(alreadyFollowing){
+            await alreadyFollowing.destroy()
+            return res.status(200).send(false)
+        }
         const follow = await Follow.create({followingId: userToFollow.id, followerId: user.id})
+        if(follow){
+            return res.status(200).send(true)
+        }
     } catch(error){
         return res.status(400).send(error)
     }
 })
 
+usersRouter.post("/following",async(req,res)=>{
+    try{
+        const following = await User.findOne({where: {username:req.body.following}})
+        const follower = await User.findOne({where: {username:req.body.follower}})
+        const follow = await Follow.findOne({where:{followingId:following.id, followerId:follower.id}})
+        if(follow){
+            return res.status(200).send(true)
+        } else{
+            return res.status(200).send(false)
+        }
+    } catch(error){
+        return res.status(400).send(error)
+    }
+})
 usersRouter.post("/login",async(req,res)=>{
     try {
         const {username,password} = req.body
