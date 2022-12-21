@@ -68,7 +68,7 @@ usersRouter.post("/follow",async(req,res)=>{
     }
 })
 
-usersRouter.post("/following",async(req,res)=>{
+usersRouter.post("/followingState",async(req,res)=>{
     try{
         const following = await User.findOne({where: {username:req.body.following}})
         const follower = await User.findOne({where: {username:req.body.follower}})
@@ -82,6 +82,17 @@ usersRouter.post("/following",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
+usersRouter.get("/whoFollow/:username",async(req,res)=>{
+    try{
+        const user = await User.findOne({where:{username:req.params.username}})
+        const following = await Follow.findAll({where:{followerId:user.id}})
+        const followers = await Follow.findAll({where:{followingId:user.id}})
+        return res.status(200).json({following,followers})
+    } catch(error){
+        return res.status(400).send(error)
+    }
+})
+
 usersRouter.post("/login",async(req,res)=>{
     try {
         const {username,password} = req.body
@@ -106,7 +117,6 @@ usersRouter.post("/login",async(req,res)=>{
         const token = jwt.sign(userForToken, process.env.SECRET)
         res.status(200).send({token,username:username})
     } catch (error) {
-        console.log(error)
         return res.status(400).send(error)
     }
 })

@@ -3,10 +3,13 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import Post from './Post'
 
-const User = ({baseUrl,user}) => {
+const User = ({baseUrl}) => {
   const username = useParams().username
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")))
   const [userData,setUserData] = useState(null)
-  const [following,setFollowing] = useState(false)
+  const [followingState,setFollowingState] = useState(false)
+  const [following,setFollowing] = useState(null)
+  const [followers,setFollowers] = useState(null)
 
   useEffect(()=>{
     const getUserData = async() => {
@@ -14,19 +17,31 @@ const User = ({baseUrl,user}) => {
         .then(result=>{
             setUserData(result.data)
             if(result.data.username != user.username){
-              axios.post(baseUrl+ `users/following`,
+              axios.post(baseUrl+ `users/followingState`,
               {follower: user.username,following: result.data.username})
-              .then(result=>setFollowing(result.data))
+              .then(result=>setFollowingState(result.data))
+              axios.get(baseUrl+`users/whoFollow/${result.data.username}`)
+              .then(result=>{
+                setFollowing(result.data.following)
+                setFollowers(result.data.followers)
+              })
+            } else {
+              axios.get(baseUrl+`users/whoFollow/${user.username}`)
+              .then(result=>{
+                setFollowing(result.data.following)
+                setFollowers(result.data.followers)
+              })
             }
           })
       }
       getUserData()
+  
     }
   ,[username])
 
   const followUser = async(userToFollow,user) => {
     axios.post(baseUrl + `users/follow`,{userToFollow,user})
-    .then(result=>setFollowing(result.data))
+    .then(result=>setFollowingState(result.data))
   }
 
   if (!user){
@@ -44,11 +59,11 @@ const User = ({baseUrl,user}) => {
             <p className="name">{userData.name} {userData.lastname}</p>
             <p className="username">@{userData.username}</p>
             <div className="follow-container">
-              <p className="followers"><span style={{fontWeight:"bolder"}}>10</span> followers</p>
-              <p className="following"><span style={{fontWeight:"bolder"}}>13</span> following</p>
+              <p className="followers"><span style={{fontWeight:"bolder"}}>{followers ? followers.length : "..."}</span> followers</p>
+              <p className="following"><span style={{fontWeight:"bolder"}}>{following ? following.length : "..."}</span> following</p>
               {userData.username != user.username &&
               <>
-                {following ? <p className="follow" onClick={()=>followUser(userData.username,user.username)}>Follow</p> :
+                {!followingState ? <p className="follow" onClick={()=>followUser(userData.username,user.username)}>Follow</p> :
                 <p className="follow unfollow" onClick={()=>followUser(userData.username,user.username)}>Unfollow</p>}
               </>
               }
