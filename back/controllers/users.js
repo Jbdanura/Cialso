@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken")
 const Post = require("../models/Post")
 const Follow = require("../models/Follow")
 
+const { Op } = require('sequelize');
+
 usersRouter.get("/all",async(req,res)=>{
     try {
         const users = await User.findAll({
@@ -20,10 +22,18 @@ usersRouter.get("/all",async(req,res)=>{
 
 usersRouter.get("/:username",async(req,res)=>{
     try {
-        const username = req.params.username
-        const user = await User.findOne({where:{username: username},include: Post})
-        return res.status(200).send(user)
+        const username = req.params.username.split(" ")
+        console.log(username)
+        if(username.length === 1){
+            const user = await User.findOne({where:{username: {[Op.iLike]:`%${username}%`}},include: Post})
+            return res.status(200).send(user)
+        } else if (username.length === 2){
+            const user = await User.findOne({where:{name:{[Op.iLike]:`%${username[0]}%`}, lastname: {[Op.iLike]:`%${username[1]}%`}},include: Post})
+            console.log(user)
+            return res.status(200).send(user)
+        }
     } catch (error) {
+        console.log(error)
         return res.status(400).send(error)
     }
 })

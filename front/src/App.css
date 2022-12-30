@@ -292,6 +292,11 @@ body{
   background-color: red;
   color: white;
 }
+.not-found{
+  font-size: 30px;
+  margin-left: 40vw;
+  margin-top: 10px;
+}
 @media screen and (max-width:1200px){
   .intro-container{
     height: 1000px;

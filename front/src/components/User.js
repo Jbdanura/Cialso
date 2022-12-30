@@ -15,6 +15,9 @@ const User = ({baseUrl}) => {
     const getUserData = async() => {
         axios.get(baseUrl+ `users/${username}`)
         .then(result=>{
+          if(!result.data){
+            return
+          }
             setUserData(result.data)
             if(result.data.username != user.username){
               axios.post(baseUrl+ `users/followingState`,
@@ -35,7 +38,7 @@ const User = ({baseUrl}) => {
           })
       }
       getUserData()
-  
+      
     }
   ,[username])
 
@@ -50,7 +53,7 @@ const User = ({baseUrl}) => {
 
   return (
     <>
-    {userData && 
+    {(userData && user ) ? 
       <div className="user-container">
         <div className="user-data">
           {userData.avatar ? <img className="avatar" src={`${baseUrl + userData.username}.png`}/> : 
@@ -77,7 +80,7 @@ const User = ({baseUrl}) => {
               return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user}></Post>
             })}
           </div> : null}
-        </div>}
+        </div> : <div className="not-found">404 User not found</div>}
     </>
 
   )
