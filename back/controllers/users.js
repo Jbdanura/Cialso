@@ -99,6 +99,7 @@ usersRouter.get("/whoFollow/:username",async(req,res)=>{
         const followers = await Follow.findAll({where:{followingId:user.id}})
         return res.status(200).json({following,followers})
     } catch(error){
+        console.log(error)
         return res.status(400).send(error)
     }
 })

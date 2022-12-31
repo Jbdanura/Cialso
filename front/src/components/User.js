@@ -10,7 +10,15 @@ const User = ({baseUrl}) => {
   const [followingState,setFollowingState] = useState(false)
   const [following,setFollowing] = useState(null)
   const [followers,setFollowers] = useState(null)
+  const [followersModal, setFollowersModal] = useState(false)
+  const [followingModal,setFollowingModal] = useState(null)
 
+  const toggleFollowersModal = () => {
+      setFollowersModal(!followersModal);
+  };
+  const toggleFollowingModal = () => {
+    setFollowingModal(!followingModal);
+  };
   useEffect(()=>{
     const getUserData = async() => {
         axios.get(baseUrl+ `users/${username}`)
@@ -62,8 +70,8 @@ const User = ({baseUrl}) => {
             <p className="name">{userData.name} {userData.lastname}</p>
             <p className="username">@{userData.username}</p>
             <div className="follow-container">
-              <p className="followers"><span style={{fontWeight:"bolder"}}>{followers ? followers.length : "..."}</span> followers</p>
-              <p className="following"><span style={{fontWeight:"bolder"}}>{following ? following.length : "..."}</span> following</p>
+              <p className="followers" onClick={toggleFollowersModal}><span style={{fontWeight:"bolder"}}>{followers ? followers.length : "..."}</span> followers</p>
+              <p className="following" onClick={toggleFollowingModal}><span style={{fontWeight:"bolder"}}>{following ? following.length : "..."}</span> following</p>
               {userData.username != user.username &&
               <>
                 {!followingState ? <p className="follow" onClick={()=>followUser(userData.username,user.username)}>Follow</p> :
@@ -80,6 +88,34 @@ const User = ({baseUrl}) => {
               return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user}></Post>
             })}
           </div> : null}
+        
+        {followersModal &&  
+          <div className="modal-overlay">
+            <div className="followers-modal">
+              <div className="modal-top">
+                <h1>Followers</h1>
+                <button onClick={toggleFollowersModal}>Close Modal</button>
+                {console.log(followers)}
+                {followers && followers.map(follower=>{
+                  console.log(follower)
+                  return <div key={follower}></div>
+                })} 
+              </div>
+            </div>
+          </div>
+        }
+        {followingModal &&
+          <div className="modal-overlay">
+          <div className="following-modal">
+            <div className="modal-top">
+              <h1>Following</h1>
+              <button onClick={toggleFollowingModal}>Close Modal</button>
+              </div>
+            </div>
+          </div>
+        }
+
+
         </div> : <div className="not-found">404 User not found</div>}
     </>
 
