@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Post from './Post'
 
 const User = ({baseUrl}) => {
@@ -12,6 +12,8 @@ const User = ({baseUrl}) => {
   const [followers,setFollowers] = useState(null)
   const [followersModal, setFollowersModal] = useState(false)
   const [followingModal,setFollowingModal] = useState(null)
+  const [noUser, setNoUser] = useState(false)
+  const navigate = useNavigate()
 
   const toggleFollowersModal = () => {
       setFollowersModal(!followersModal);
@@ -19,11 +21,15 @@ const User = ({baseUrl}) => {
   const toggleFollowingModal = () => {
     setFollowingModal(!followingModal);
   };
+  const toggleNoUser = () => {
+    setNoUser(!noUser)
+  }
   useEffect(()=>{
     const getUserData = async() => {
         axios.get(baseUrl+ `users/${username}`)
         .then(result=>{
           if(!result.data){
+            toggleNoUser()
             return
           }
             setUserData(result.data)
@@ -94,13 +100,18 @@ const User = ({baseUrl}) => {
             <div className="followers-modal">
               <div className="modal-top">
                 <h1>Followers</h1>
-                <button onClick={toggleFollowersModal}>Close Modal</button>
-                {console.log(followers)}
-                {followers && followers.map(follower=>{
-                  console.log(follower)
-                  return <div key={follower}></div>
-                })} 
+                <button className="close-modal" onClick={toggleFollowersModal}>X</button>
               </div>
+              {followers && followers.map(follower =>{
+                return <div onClick={()=>{
+                  toggleFollowersModal()
+                  navigate(`/${follower.follower.username}`)
+                  }} className="user-follow" key={follower.follower.id}>
+                    {follower.follower.avatar ? <img className="avatar-follow" src={`${baseUrl + follower.follower.username}.png`}/> : 
+                    <img className="avatar-follow" src={"/user.png"}/>}
+                    <p>{follower.follower.username} - {follower.follower.name + " " + follower.follower.lastname} </p>
+                  </div>
+              })}
             </div>
           </div>
         }
@@ -109,14 +120,23 @@ const User = ({baseUrl}) => {
           <div className="following-modal">
             <div className="modal-top">
               <h1>Following</h1>
-              <button onClick={toggleFollowingModal}>Close Modal</button>
-              </div>
+              <button className="close-modal" onClick={toggleFollowingModal}>X</button>
+            </div>
+              {following && following.map(following =>{
+                return <div onClick={()=>{
+                  toggleFollowingModal()
+                  navigate(`/${following.following.username}`)
+                  }} className="user-follow" key={following.following.id}>
+                    {following.following.avatar ? <img className="avatar-follow" src={`${baseUrl + following.following.username}.png`}/> : 
+                    <img className="avatar-follow" src={"/user.png"}/>}
+                    <p>{following.following.username} - {following.following.name + " " + following.following.lastname} </p>
+                  </div>
+              })}
             </div>
           </div>
         }
-
-
-        </div> : <div className="not-found">404 User not found</div>}
+        </div> :
+        <div className="not-found">{noUser && "404 User not found"}</div>}
     </>
 
   )

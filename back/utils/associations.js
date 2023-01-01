@@ -8,6 +8,8 @@ const associations = async()=>{
     Post.belongsTo(User)
     User.belongsToMany(User,{through:Follow, as:"following", foreignKey:"followingId"})
     User.belongsToMany(User,{through:Follow, as:"follower", foreignKey:"followerId"})
+    Follow.belongsTo(User, { as: 'follower', foreignKey: 'followerId' });
+    Follow.belongsTo(User, { as: 'following', foreignKey: 'followingId' });
 }
 
 module.exports = associations

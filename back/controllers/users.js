@@ -95,8 +95,23 @@ usersRouter.post("/followingState",async(req,res)=>{
 usersRouter.get("/whoFollow/:username",async(req,res)=>{
     try{
         const user = await User.findOne({where:{username:req.params.username}})
-        const following = await Follow.findAll({where:{followerId:user.id}})
-        const followers = await Follow.findAll({where:{followingId:user.id}})
+        const following = await Follow.findAll({
+            where:{followerId:user.id},
+            include:[{
+                model: User,
+                as:"following",
+                attributes:["avatar","name","lastname","username"]
+            }],
+        })
+        const followers = await Follow.findAll({
+            where:{followingId:user.id},
+            include:[{
+                model: User,
+                as:"follower",
+                attributes:["avatar","name","lastname","username"]
+            }],
+            
+        })
         return res.status(200).json({following,followers})
     } catch(error){
         console.log(error)

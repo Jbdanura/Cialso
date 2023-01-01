@@ -309,6 +309,7 @@ body{
 .modal-top{
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 .followers-modal, .following-modal {
   position: fixed;
@@ -320,7 +321,25 @@ body{
   padding: 20px;
   z-index: 10000;
 }
-
+.close-modal{
+  color: white;
+  background-color: red;
+  padding: 5px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.534);
+}
+.avatar-follow{
+  width: 30px;
+  margin-right: 10px;
+}
+.user-follow{
+  display: flex;
+  padding: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.527);
+}
+.user-follow:hover{
+  cursor: pointer;
+}
 @media screen and (max-width:1200px){
   .intro-container{
     height: 1000px;
