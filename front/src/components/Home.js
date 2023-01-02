@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Publish from './Publish'
 
-const Home = ({baseUrl}) => {
+const Home = ({baseUrl,user}) => {
   const navigate = useNavigate()
-  const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")))
   
   if(!user){
     return null
@@ -13,7 +12,7 @@ const Home = ({baseUrl}) => {
   return (
     <div className="home">
         <p className="discover" onClick={()=>navigate("/discover")}>Discover new people</p>
-        <Publish baseUrl={baseUrl}/>
+        <Publish baseUrl={baseUrl} user={user}/>
     </div>
   )
 }

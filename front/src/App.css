@@ -101,11 +101,11 @@
   border: 1px solid rgba(0, 0, 0, 0.397);
 }
 .navbar-search button{
-  margin-left: -5px;
   width: 40px;
   background-color: rgb(182, 187, 255);
   border: 1px solid green;
-  padding: 5px;
+  border-radius: 5px;
+  padding: 8px;
 }
 .intro-form .error-msg{
   color: red;
@@ -127,11 +127,13 @@
   width: 30px;
   height: 30px;
 }
+
 .navbar .logout{
-  width: 30px;
+  transform: scale(1.2);
   margin-left: 15px;
+  z-index: 0;
 }
-.navbar .avatar:hover{
+.navbar .avatar:hover, .navbar .logout:hover{
   cursor:pointer;
 }
 .user-data{
@@ -184,6 +186,16 @@
 }
 .home .discover{
   cursor: pointer;
+  color: rgb(49, 49, 185);
+  text-decoration: underline;
+}
+
+.home{
+  width: 60vw;
+  margin: 0 auto;
+}
+.home .discover{
+ margin: 10px 70px;
 }
 .discover-container{
   width: 80vw;
@@ -212,14 +224,35 @@
 .discover-avatar{
   width: 70px;
 }
-
+.post-form-container{
+  width: 100%;
+  margin: 20px auto;
+}
 .post-description{
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  width: 40%;
-  height: 150px;
   resize: none;
+  padding: 10px;
+}
+.post-form-container textarea{
+  width: 100%;
+  height: 100px;
+}
+.post-form-submit{
+  margin-top: -10px;
+  padding-top: 10px;
+  width: 100%;
+  text-align: right;
+  background-color: rgb(209, 209, 209);
+}
+.post-form-submit input{
+  margin-right: 2px;
+  margin-bottom: 5px;
+  padding: 10px 20px;
+  color: white;
+  background-color: rgb(18, 89, 155);
+  border: 1px solid rgb(25, 129, 226);
 }
 .post-avatar{
   width: 50px;
@@ -324,6 +357,7 @@ body{
 .close-modal{
   color: white;
   background-color: red;
+  margin-left: 20px;
   padding: 5px 15px;
   border: 1px solid rgba(0, 0, 0, 0.534);
 }
@@ -340,6 +374,7 @@ body{
 .user-follow:hover{
   cursor: pointer;
 }
+
 @media screen and (max-width:1200px){
   .intro-container{
     height: 1000px;
@@ -372,33 +407,28 @@ body{
     display: none;
   }
   .mobile-navbar{
-    background-color: rgb(144, 144, 255);
+    background-color: rgb(49, 113, 231);
+    border-right: 1px solid rgb(148, 164, 255);
     position: absolute;
     top:0;
     left:0;
-    padding-bottom: 20px;
     border-radius: 3px;
-    width: 80vw;
+    width: 100vw;
+    z-index: 1;
   }
   .mobile-navbar .navbar-search{
-    margin-top: 10px;
-    margin-left: 10px;
+    width: 85%;
+    margin-top: 5px;
+    margin-left: 5px;
   }
   .mobile-navbar .close{
-    display: block;
-    position: absolute;
-    padding: 8px;
-    left: 88%;
-    top: 0;
-    margin-top: 10px;
-    border: 1px solid rgb(172, 0, 0);
-    background-color: rgb(238, 70, 70);
-  }
-  .navbar-search input{
-    width: 50vw;
-  }
-  .navbar-search{
-    margin-top: 10px;
+    float: right;
+    color: white;
+    background-color: red;
+    padding: 5px 10px;
+    margin-right: 2px;
+    border: 1px solid rgb(255, 170, 170);
+    transform: translateY(-120%);
   }
   .navbar .menu{
     display:block;
@@ -429,9 +459,19 @@ body{
   .follow-container{
     justify-content: space-evenly;
   }
+  .home{
+    width: 95vw;
+  }
+  .home .discover{
+    text-align: center;
+    margin: 10px 0;
+  }
+  .post-form-container {
+    width: 90%;
+  }
 }
 
-@media screen and (max-width:400px){
+@media screen and (max-width:300px){
   .intro-form button{
     width: 60%;
   }
@@ -440,10 +480,9 @@ body{
     font-size: 50px;
   }
   .mobile-navbar{
-    width: 90%;
+    width: 98%;
   }
   .mobile-navbar .navbar-search{
-    width: 80%;
+    width: 60%;
   }
-
 }

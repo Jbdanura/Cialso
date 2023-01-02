@@ -25,9 +25,9 @@ function App() {
       <Navbar user={user} setUser={setUser}/>
       }
       <Routes>
-        <Route path="/" element={<Home baseUrl={baseUrl}/>}/>
-        <Route path="/:username" element={<User baseUrl={baseUrl}/>}/>
-        <Route path="/discover" element={<Discover baseUrl={baseUrl}/>}/>
+        <Route path="/" element={<Home baseUrl={baseUrl} user={user}/>}/>
+        <Route path="/:username" element={<User baseUrl={baseUrl} user={user}/>}/>
+        <Route path="/discover" element={<Discover baseUrl={baseUrl} user={user}/>}/>
       </Routes>
       </BrowserRouter>
 

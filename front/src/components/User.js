@@ -3,9 +3,8 @@ import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import Post from './Post'
 
-const User = ({baseUrl}) => {
+const User = ({baseUrl, user}) => {
   const username = useParams().username
-  const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")))
   const [userData,setUserData] = useState(null)
   const [followingState,setFollowingState] = useState(false)
   const [following,setFollowing] = useState(null)

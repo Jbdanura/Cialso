@@ -2,9 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Discover = ({baseUrl}) => {
+const Discover = ({baseUrl,user}) => {
   const [users,setUsers] = useState()
-  const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")))
   const navigate = useNavigate()
   useEffect(()=>{
     const getUsers = async () => {
