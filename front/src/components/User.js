@@ -25,6 +25,7 @@ const User = ({baseUrl, user}) => {
   }
   useEffect(()=>{
     const getUserData = async() => {
+        if(!user) return
         axios.get(baseUrl+ `users/${username}`)
         .then(result=>{
           if(!result.data){
@@ -53,7 +54,7 @@ const User = ({baseUrl, user}) => {
       getUserData()
       
     }
-  ,[username])
+  ,[username, user])
 
   const followUser = async(userToFollow,user) => {
     axios.post(baseUrl + `users/follow`,{userToFollow,user})

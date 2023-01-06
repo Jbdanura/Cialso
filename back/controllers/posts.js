@@ -37,5 +37,13 @@ postsRouter.get("/:username",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
-
+postsRouter.put("/:postId",async(req,res)=>{
+    try {
+        const post = await Post.findByPk(req.params.postId)
+        await post.update({description: req.body.description})
+        return res.status(200).send(post)
+    } catch (error) {
+        return res.status(400).send(error)
+    }
+})
 module.exports = postsRouter

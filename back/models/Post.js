@@ -7,7 +7,8 @@ const Post = sequelize.define("Post",{
         allowNull:false
     },
 },{
-    sequelize
+    sequelize,
+    timestamps:true
 })
 
 

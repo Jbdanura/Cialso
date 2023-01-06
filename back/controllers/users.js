@@ -89,7 +89,7 @@ usersRouter.post("/followingState",async(req,res)=>{
             return res.status(200).send(false)
         }
     } catch(error){
-        return res.status(400).send(error)
+        console.log(error)
     }
 })
 usersRouter.get("/whoFollow/:username",async(req,res)=>{
