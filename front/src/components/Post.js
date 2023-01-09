@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Post = ({post,userData,baseUrl,user}) => {
+const Post = ({post,userData,baseUrl,user,inHome}) => {
   const navigate = useNavigate()
   const [editPost, setEditPost] = useState(false)
   const [postInfo,setPostInfo] = useState(post)
@@ -17,7 +17,7 @@ const Post = ({post,userData,baseUrl,user}) => {
   }
 
   return (
-    <div className="user-post">
+    <div className={inHome?"home-post":"user-post"}>
         <div className="post-info" onClick={()=>navigate(`/${userData.username}`)}>
             {userData.avatar ? <img className="avatar" src={`${baseUrl + userData.username}.png`}/> : 
             <img className="post-avatar" src={"/user.png"}/>}

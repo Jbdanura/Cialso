@@ -400,6 +400,18 @@ body{
   background-color: rgb(1, 46, 1);
   cursor: pointer;
 }
+.home-posts-container{
+  border-left: 1px solid rgba(196, 185, 255, 0.363);
+  background-color: rgb(247, 247, 247);
+  border-right: 1px solid rgba(196, 185, 255, 0.363);
+}
+.home-post{
+  padding: 20px;
+  border-bottom: 1px solid rgba(196, 185, 255, 0.363);
+}
+.home-post:hover{
+  background-color: rgba(235, 240, 255, 0.61);
+}
 @media screen and (max-width:1200px){
   .intro-container{
     height: 1000px;

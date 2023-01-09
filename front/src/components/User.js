@@ -62,6 +62,7 @@ const User = ({baseUrl, user}) => {
   }
 
   if (!user){
+    navigate("/")
     return null
   } 
 
@@ -91,7 +92,7 @@ const User = ({baseUrl, user}) => {
         {userData.Posts.length > 0 ? 
           <div className="user-posts">
             {userData.Posts.slice(0).reverse().map(post=>{
-              return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user}></Post>
+              return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user} inHome={false}></Post>
             })}
           </div> : null}
         

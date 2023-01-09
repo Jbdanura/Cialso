@@ -13,6 +13,7 @@ const Discover = ({baseUrl,user}) => {
   }
   ,[])
   if(!user){
+    navigate("")
     return null
   }
   return (
