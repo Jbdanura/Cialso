@@ -15,18 +15,23 @@ const getToken = req => {
 }
 
 postsRouter.post("/new", async(req,res)=>{
-    const description = req.body.description
-    const token = getToken(req)
-    const decodedToken = jwt.verify(token,process.env.SECRET)
-    if(!decodedToken.id){
-        return response.status(401).json({error: "token missing or invalid"})
+    try {
+        const description = req.body.description
+        const token = getToken(req)
+        const decodedToken = jwt.verify(token,process.env.SECRET)
+        if(!decodedToken.id){
+            return response.status(401).json({error: "token missing or invalid"})
+        }
+        const user = await User.findByPk(decodedToken.id)
+        const post = await Post.create({
+            description,
+            UserId: decodedToken.id
+        })
+        res.status(200).json(description)
+    } catch (error) {
+        res.status(400).send(error)
     }
-    const user = await User.findByPk(decodedToken.id)
-    const post = await Post.create({
-        description,
-        UserId: decodedToken.id
-    })
-    res.json(description)
+
 })
 
 postsRouter.get("/:username",async(req,res)=>{

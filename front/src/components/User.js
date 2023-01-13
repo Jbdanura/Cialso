@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import Post from './Post'
+import Publish from './Publish'
 
 const User = ({baseUrl, user}) => {
   const username = useParams().username
@@ -23,6 +24,11 @@ const User = ({baseUrl, user}) => {
   const toggleNoUser = () => {
     setNoUser(!noUser)
   }
+  const refreshPosts = () => {
+    axios.get(baseUrl+ `users/${username}`)
+    .then(result => setUserData(result.data))
+  }
+
   useEffect(()=>{
     const getUserData = async() => {
         if(!user) return
@@ -89,6 +95,9 @@ const User = ({baseUrl, user}) => {
           </div>
 
         </div> 
+        {userData.username === user.username &&
+          <Publish baseUrl={baseUrl} user={user} refreshPosts={refreshPosts}/>
+        }
         {userData.Posts.length > 0 ? 
           <div className="user-posts">
             {userData.Posts.slice(0).reverse().map(post=>{

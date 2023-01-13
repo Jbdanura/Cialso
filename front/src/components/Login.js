@@ -18,6 +18,14 @@ const Login = ({baseUrl,setUser}) => {
     const name = event.target.name.value
     const lastname = event.target.lastname.value
     const username = event.target.username.value
+    if (name.split(" ").length !== 1 || lastname.split(" ").length !== 1 || username.split(" ").length !== 1) {
+      setErrorMessage("Only one word per field!")
+      setTimeout(()=>{
+        setErrorMessage()
+      },5000)
+      return
+    }
+
     const email = event.target.email.value
     const password = event.target.password.value
     
