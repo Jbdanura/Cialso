@@ -20,25 +20,36 @@ usersRouter.get("/all",async(req,res)=>{
     }
 })
 
-usersRouter.get("/:username",async(req,res)=>{
+usersRouter.post("/:username",async(req,res)=>{
     try {
+        const page = req.body.page
         const username = req.params.username.split(" ")
-        console.log(username)
         if(username.length === 1){
-            const user = await User.findOne({where:{username: {[Op.iLike]:`%${username}%`}},include: Post})
+            const user = await User.findOne({where:{username: {[Op.iLike]:`%${username}%`}},
+            include: [{
+                model: Post,
+                limit: 10 * page,
+                order: [["createdAt", "DESC"]]
+            }
+            ]})
             return res.status(200).send(user)
         } else if (username.length === 2){
-            const user = await User.findOne({where:{name:{[Op.iLike]:`%${username[0]}%`}, lastname: {[Op.iLike]:`%${username[1]}%`}},include: Post})
+            const user = await User.findOne({where:{name:{[Op.iLike]:`%${username[0]}%`}, lastname: {[Op.iLike]:`%${username[1]}%`}},
+            include: [{
+                model: Post,
+                limit: 10 * page,
+                order: [["createdAt", "DESC"]]
+            }
+            ]})
             console.log(user)
             return res.status(200).send(user)
         }
     } catch (error) {
-        console.log(error)
         return res.status(400).send(error)
     }
 })
 
-usersRouter.post("/new",async(req,res)=>{
+usersRouter.post("/account/new",async(req,res)=>{
     try {
         const {name,lastname,username,email,password} = req.body
         if(!name || !lastname || !username || !email || !password){
@@ -119,10 +130,10 @@ usersRouter.get("/whoFollow/:username",async(req,res)=>{
     }
 })
 
-usersRouter.post("/login",async(req,res)=>{
+usersRouter.post("/account/login",async(req,res)=>{
     try {
+        console.log("body")
         const {username,password} = req.body
-        console.log(username,password)
         if(!username || !password){
             return res.status(400).send("Missing field")
         }

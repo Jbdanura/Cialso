@@ -52,8 +52,10 @@ postsRouter.put("/:postId",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
-postsRouter.get("/followingPosts/:username",async(req,res)=>{
+postsRouter.post("/followingPosts/:username",async(req,res)=>{
     try {
+        const page = req.body.page
+        const limit = 10
         const user = await User.findOne({where:{username:req.params.username}})
         // Find all follow records where the user is the follower
         const follows = await Follow.findAll({
@@ -71,6 +73,7 @@ postsRouter.get("/followingPosts/:username",async(req,res)=>{
                 where: { id: followingIds },
             },
             ],
+            limit: page * limit,
         });
         return res.status(200).send(posts)
          

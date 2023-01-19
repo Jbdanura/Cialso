@@ -29,7 +29,7 @@ const Login = ({baseUrl,setUser}) => {
     const email = event.target.email.value
     const password = event.target.password.value
     
-    axios.post(baseUrl+"users/new",{name,lastname,username,email,password})
+    axios.post(baseUrl+"users/account/new",{name,lastname,username,email,password})
     .then((result)=>{
       setMessage(result.data)
       setTimeout(()=>{
@@ -54,8 +54,8 @@ const Login = ({baseUrl,setUser}) => {
     event.preventDefault()
     const username = event.target.username.value
     const password = event.target.password.value
-
-    axios.post(baseUrl+"users/login",{username,password})
+    console.log(username,password)
+    axios.post(baseUrl+"users/account/login",{username,password})
     .then((result)=>{
       setUser(result.data)
       localStorage.setItem("user",JSON.stringify(result.data))

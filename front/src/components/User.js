@@ -13,7 +13,11 @@ const User = ({baseUrl, user}) => {
   const [followersModal, setFollowersModal] = useState(false)
   const [followingModal,setFollowingModal] = useState(null)
   const [noUser, setNoUser] = useState(false)
+  const [page,setPage] = useState(1)
+  const [isLoading,setIsLoading] = useState(false)
+  const [maxPosts, setMaxPosts] = useState(false)
   const navigate = useNavigate()
+  const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   const toggleFollowersModal = () => {
       setFollowersModal(!followersModal);
@@ -25,20 +29,28 @@ const User = ({baseUrl, user}) => {
     setNoUser(!noUser)
   }
   const refreshPosts = () => {
-    axios.get(baseUrl+ `users/${username}`)
+    axios.post(baseUrl+ `users/${username}`,{page})
     .then(result => setUserData(result.data))
   }
-
+  const handleScroll = async () => {
+    if (!maxPosts && window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        setIsLoading(true)
+        await wait(1000)
+        setPage(page =>page + 1);
+        setIsLoading(false)
+    }
+  }
   useEffect(()=>{
     const getUserData = async() => {
         if(!user) return
-        axios.get(baseUrl+ `users/${username}`)
+        axios.post(baseUrl+ `users/${username}`,{page})
         .then(result=>{
           if(!result.data){
             toggleNoUser()
             return
           }
             setUserData(result.data)
+            
             if(result.data.username != user.username){
               axios.post(baseUrl+ `users/followingState`,
               {follower: user.username,following: result.data.username})
@@ -58,9 +70,13 @@ const User = ({baseUrl, user}) => {
           })
       }
       getUserData()
-      
+      if(userData){
+        if(userData.Posts.length < 10 * page) setMaxPosts(true)
+      }
+      window.addEventListener('scroll', handleScroll);
+      return ()=>window.removeEventListener("scroll",handleScroll)
     }
-  ,[username, user])
+  ,[username, user,page])
 
   const followUser = async(userToFollow,user) => {
     axios.post(baseUrl + `users/follow`,{userToFollow,user})
@@ -100,11 +116,11 @@ const User = ({baseUrl, user}) => {
         }
         {userData.Posts.length > 0 ? 
           <div className="user-posts">
-            {userData.Posts.slice(0).reverse().map(post=>{
+            {userData.Posts.map(post=>{
               return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user} inHome={false}></Post>
             })}
           </div> : null}
-        
+        {isLoading && <p className="loading-posts">Loading...</p>}
         {followersModal &&  
           <div className="modal-overlay">
             <div className="followers-modal">

@@ -425,6 +425,14 @@ body{
   font-weight: bold;
   border-radius: 5px;
 }
+.loading-posts{
+  margin: 20px 0 0 50px;
+  font-size: 23px;
+  padding-bottom: 20px;
+  font-weight: bolder;
+  font-style: italic;
+  color: rgb(0, 0, 0);
+}
 @media screen and (max-width:1200px){
   .intro-container{
     height: 1000px;
