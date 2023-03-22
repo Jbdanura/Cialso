@@ -1,3 +1,4 @@
+require('express-async-errors')
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -18,8 +19,8 @@ const Follow = require('./models/Follow');
 var app = express();
 
 // view engine setup
-app.use(logger('dev'));
 app.use(cors())
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -28,10 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/",indexRouter)
 app.use("/users", usersRouter)
 app.use("/posts",postsRouter)
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 
 connect()
 
@@ -45,13 +42,21 @@ associations()
 syncModels()
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+  console.log("error name", error.name)
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } 
+  else if (error.name === 'TypeError') {
+    return response.status(400).send({ error: 'type error' })
+  } 
+  else if (error.name ===  'JsonWebTokenError') {
+    return response.status(400).json({ error: error.message })
+  }
+  return response.status(400).send(error)
+}
 
-  // render the error page
-  res.status(err.status || 500);
-});
+app.use(errorHandler)
 
 module.exports = app;

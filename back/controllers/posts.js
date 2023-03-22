@@ -52,6 +52,7 @@ postsRouter.put("/:postId",async(req,res)=>{
         return res.status(400).send(error)
     }
 })
+
 postsRouter.post("/followingPosts/:username",async(req,res)=>{
     try {
         const page = req.body.page

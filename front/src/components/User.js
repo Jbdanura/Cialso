@@ -29,7 +29,7 @@ const User = ({baseUrl, user}) => {
     setNoUser(!noUser)
   }
   const refreshPosts = () => {
-    axios.post(baseUrl+ `users/${username}`,{page})
+    axios.post(baseUrl+ `users/user/${username}`,{page})
     .then(result => setUserData(result.data))
   }
   const handleScroll = async () => {
@@ -43,7 +43,7 @@ const User = ({baseUrl, user}) => {
   useEffect(()=>{
     const getUserData = async() => {
         if(!user) return
-        axios.post(baseUrl+ `users/${username}`,{page})
+        axios.post(baseUrl+ `users/user/${username}`,{page})
         .then(result=>{
           if(!result.data){
             toggleNoUser()
@@ -79,8 +79,11 @@ const User = ({baseUrl, user}) => {
   ,[username, user,page])
 
   const followUser = async(userToFollow,user) => {
-    axios.post(baseUrl + `users/follow`,{userToFollow,user})
-    .then(result=>setFollowingState(result.data))
+    axios.post(`${baseUrl}users/follow`,{userToFollow,user})
+    .then(result=>{
+      console.log(result)
+      setFollowingState(result.data)
+    })
   }
 
   if (!user){

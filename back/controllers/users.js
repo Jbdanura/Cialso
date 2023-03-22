@@ -20,7 +20,7 @@ usersRouter.get("/all",async(req,res)=>{
     }
 })
 
-usersRouter.post("/:username",async(req,res)=>{
+usersRouter.post("/user/:username",async(req,res)=>{
     try {
         const page = req.body.page
         const username = req.params.username.split(" ")
@@ -72,19 +72,25 @@ usersRouter.post("/account/new",async(req,res)=>{
 })
 
 usersRouter.post("/follow",async(req,res)=>{
+    console.log("gerere")
     try{
+        console.log(req.body)
         const userToFollow = await User.findOne({where: {username:req.body.userToFollow}})
         const user = await User.findOne({where: {username:req.body.user}})
         const alreadyFollowing = await Follow.findOne({where:{followingId:userToFollow.id, followerId:user.id}})
+        console.log(userToFollow,user,alreadyFollowing)
         if(alreadyFollowing){
             await alreadyFollowing.destroy()
+            console.log("false follow")
             return res.status(200).send(false)
         }
         const follow = await Follow.create({followingId: userToFollow.id, followerId: user.id})
         if(follow){
+            console.log("follow")
             return res.status(200).send(true)
         }
     } catch(error){
+        console.log(error)
         return res.status(400).send(error)
     }
 })
@@ -103,6 +109,7 @@ usersRouter.post("/followingState",async(req,res)=>{
         console.log(error)
     }
 })
+
 usersRouter.get("/whoFollow/:username",async(req,res)=>{
     try{
         const user = await User.findOne({where:{username:req.params.username}})
