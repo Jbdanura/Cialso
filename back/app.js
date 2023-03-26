@@ -15,7 +15,6 @@ const associations = require("./utils/associations");
 const postsRouter = require('./controllers/posts');
 const Follow = require('./models/Follow');
 
-
 var app = express();
 
 // view engine setup

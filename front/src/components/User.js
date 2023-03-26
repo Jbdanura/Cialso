@@ -76,12 +76,13 @@ const User = ({baseUrl, user}) => {
       window.addEventListener('scroll', handleScroll);
       return ()=>window.removeEventListener("scroll",handleScroll)
     }
-  ,[username, user,page])
+  ,[username, user,page,followingState])
 
-  const followUser = async(userToFollow,user) => {
-    axios.post(`${baseUrl}users/follow`,{userToFollow,user})
+  const followUser = async(userToFollow,username) => {
+    const token = `bearer ${user.token}`
+    const config = {headers: {Authorization: token}}
+    axios.post(`${baseUrl}users/follow`,{userToFollow,username},config)
     .then(result=>{
-      console.log(result)
       setFollowingState(result.data)
     })
   }

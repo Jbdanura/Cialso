@@ -9,7 +9,9 @@ const Post = ({post,userData,baseUrl,user,inHome}) => {
   const [newDescription, setNewDescription] = useState(postInfo.description)
 
   const editPostDescription = async () =>{
-    await axios.put(`${baseUrl}posts/${post.id}`,{description: newDescription})
+    const token = `bearer ${user.token}`
+    const config = {headers:{Authorization: token}}
+    await axios.put(`${baseUrl}posts/${post.id}`,{description: newDescription},config)
     .then(result=>{
         setPostInfo(result.data)
         setEditPost(false)

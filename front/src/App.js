@@ -9,6 +9,7 @@ import Discover from './components/Discover';
 
 function App() {
   const [user,setUser] = useState(false)
+
   const baseUrl = "http://localhost:3001/"
 
   useEffect(()=>{
@@ -18,6 +19,7 @@ function App() {
       setUser(foundUser)
     }
   },[])
+
   return (
     <div className="App">
       <BrowserRouter>
