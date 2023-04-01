@@ -1,4 +1,4 @@
-const sequelize = require("..utils/db").sequelize
+const sequelize = require("../utils/db").sequelize
 const {DataTypes} = require("sequelize")
 
 const Like = sequelize.define("Like", {
@@ -23,3 +23,4 @@ const Like = sequelize.define("Like", {
     timestamps: true
 });
   
+module.exports = Like

@@ -6,6 +6,7 @@ const postsRouter = require("express").Router()
 const jwt = require("jsonwebtoken")
 const Follow = require("../models/Follow")
 const {getToken} = require("../utils/controllers")
+const Like = require("../models/Like")
 
 postsRouter.post("/new", async(req,res)=>{
     const description = req.body.description
@@ -68,4 +69,32 @@ postsRouter.post("/followingPosts/:username",async(req,res)=>{
     });
     return res.status(200).send(posts)
 })
+
+postsRouter.post("/like/:postId",async(req,res)=>{
+    try {
+        const postId = req.params.postId
+        const username = req.body.username
+        const token = getToken(req)
+        const decodedToken = jwt.verify(token,process.env.SECRET)
+        if(!decodedToken.id){
+            return res.status(401).json({error: "token missing or invalid"})
+        }
+        const user = await User.findByPk(decodedToken.id)
+        if(user.username !== username){
+            return res.status(400).send("invalid user")
+        }
+        const existsLike = await Like.findOne({postId, userId:user.id})
+        if(!existsLike){
+            const like = await Like.create({postId, userId:user.id})
+            return res.status(200).send(like)
+        } else {
+            await existsLike.destroy()
+            return res.status(200).send("removed like")
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send(error)
+    } 
+})
+
 module.exports = postsRouter

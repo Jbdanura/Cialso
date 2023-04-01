@@ -10,10 +10,10 @@ const User = require('./models/User')
 const usersRouter = require('./controllers/users');
 const cors = require("cors");
 const Post = require('./models/Post');
-const Comment = require('./models/Comment');
 const associations = require("./utils/associations");
 const postsRouter = require('./controllers/posts');
 const Follow = require('./models/Follow');
+const Like = require('./models/Like');
 
 var app = express();
 
@@ -35,6 +35,7 @@ const syncModels = async()=>{
   await User.sync({alter:true})
   await Post.sync({alter:true})
   await Follow.sync({alter:true})
+  await Like.sync({alter:true})
 }
 
 associations()
