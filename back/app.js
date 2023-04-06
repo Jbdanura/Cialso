@@ -14,6 +14,7 @@ const associations = require("./utils/associations");
 const postsRouter = require('./controllers/posts');
 const Follow = require('./models/Follow');
 const Like = require('./models/Like');
+const Comment = require('./models/Comment');
 
 var app = express();
 
@@ -36,6 +37,7 @@ const syncModels = async()=>{
   await Post.sync({alter:true})
   await Follow.sync({alter:true})
   await Like.sync({alter:true})
+  await Comment.sync({alter:true})
 }
 
 associations()
