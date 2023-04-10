@@ -24,7 +24,11 @@ usersRouter.post("/user/:username",async(req,res)=>{
         include: [{
             model: Post,
             limit: 10 * page,
-            order: [["createdAt", "DESC"]]
+            order: [["createdAt", "DESC"]],
+            include:[{
+                model: User,
+                as: "likedBy",
+            }]
         }
         ]})
         return res.status(200).send(user)
@@ -143,7 +147,7 @@ usersRouter.post("/account/login",async(req,res)=>{
         id: user.id
     }
     const token = jwt.sign(userForToken, process.env.SECRET)
-    res.status(200).send({token,username:username})
+    res.status(200).send({token,username:username, id:user.id})
 })
 
 module.exports = usersRouter

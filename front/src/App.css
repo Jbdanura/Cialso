@@ -433,6 +433,9 @@ body{
   font-style: italic;
   color: rgb(0, 0, 0);
 }
+.post-liked{
+  color: red;
+}
 @media screen and (max-width:1200px){
   .intro-container{
     height: 1000px;

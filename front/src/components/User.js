@@ -50,7 +50,7 @@ const User = ({baseUrl, user}) => {
             return
           }
             setUserData(result.data)
-            
+
             if(result.data.username != user.username){
               axios.post(baseUrl+ `users/followingState`,
               {follower: user.username,following: result.data.username})
@@ -70,6 +70,7 @@ const User = ({baseUrl, user}) => {
           })
       }
       getUserData()
+
       if(userData){
         if(userData.Posts.length < 10 * page) setMaxPosts(true)
       }
@@ -121,7 +122,13 @@ const User = ({baseUrl, user}) => {
         {userData.Posts.length > 0 ? 
           <div className="user-posts">
             {userData.Posts.map(post=>{
-              return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user} inHome={false}></Post>
+              const isLiked = post.likedBy.filter(postInfo => postInfo.Like.userId === user.id)
+              let showLike = false
+              if(isLiked.length > 0){
+                showLike = true
+              } 
+              
+              return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user} inHome={false} showLike={showLike}></Post>
             })}
           </div> : null}
         {isLoading && <p className="loading-posts">Loading...</p>}

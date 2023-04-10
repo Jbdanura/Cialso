@@ -83,7 +83,7 @@ postsRouter.post("/like/:postId",async(req,res)=>{
         if(user.username !== username){
             return res.status(400).send("invalid user")
         }
-        const existsLike = await Like.findOne({postId, userId:user.id})
+        const existsLike = await Like.findOne({where:{postId, userId:user.id}})
         if(!existsLike){
             const like = await Like.create({postId, userId:user.id})
             return res.status(200).send(like)
