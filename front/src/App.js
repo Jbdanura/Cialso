@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      {!user ? <Login baseUrl={baseUrl} setUser={setUser}></Login> : 
+      {!user ? <Login baseUrl={baseUrl} setUser={setUser}></Login>  : 
       <Navbar user={user} setUser={setUser}/>
       }
       <Routes>
