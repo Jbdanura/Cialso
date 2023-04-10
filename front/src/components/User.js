@@ -16,6 +16,7 @@ const User = ({baseUrl, user}) => {
   const [page,setPage] = useState(1)
   const [isLoading,setIsLoading] = useState(false)
   const [maxPosts, setMaxPosts] = useState(false)
+  const [toggleLoading, setToggleLoading] = useState(false)
   const navigate = useNavigate()
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -77,7 +78,7 @@ const User = ({baseUrl, user}) => {
       window.addEventListener('scroll', handleScroll);
       return ()=>window.removeEventListener("scroll",handleScroll)
     }
-  ,[username, user,page,followingState])
+  ,[username, user,page,followingState,toggleLoading])
 
   const followUser = async(userToFollow,username) => {
     const token = `bearer ${user.token}`
@@ -86,6 +87,10 @@ const User = ({baseUrl, user}) => {
     .then(result=>{
       setFollowingState(result.data)
     })
+  }
+
+  const changeUserDataLikes = () => {
+    setToggleLoading(!toggleLoading)
   }
 
   if (!user){
@@ -128,7 +133,8 @@ const User = ({baseUrl, user}) => {
                 showLike = true
               } 
               
-              return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user} inHome={false} showLike={showLike}></Post>
+              return <Post key={post.id} post={post} userData={userData} baseUrl={baseUrl} user={user} inHome={false} showLike={showLike}
+              changeUserDataLikes={changeUserDataLikes} ></Post>
             })}
           </div> : null}
         {isLoading && <p className="loading-posts">Loading...</p>}

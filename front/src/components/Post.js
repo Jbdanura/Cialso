@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Post = ({post,userData,baseUrl,user,inHome,showLike}) => {
+const Post = ({post,userData,baseUrl,user,inHome,showLike,changeUserDataLikes}) => {
   const navigate = useNavigate()
   const [editPost, setEditPost] = useState(false)
   const [postInfo,setPostInfo] = useState(post)
@@ -25,8 +25,10 @@ const Post = ({post,userData,baseUrl,user,inHome,showLike}) => {
     .then(result=>{
         if(result.data==="removed like"){
             setLiked(false)
+            changeUserDataLikes()
         }else{
             setLiked(true)
+            changeUserDataLikes()
         }})
   }
 
